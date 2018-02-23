@@ -7,22 +7,30 @@
 ####
 
 team_name = 'whatevr' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+strategy_name = 'betray if betrayed, collude if ahead'
+strategy_description = 'the first round we betray no matter if buddy colluded, second round we betray only if buddy betrayed other wise collude, if buddy starts to get a higher score then we betray, once we get ahead we collude until betrayed  ?'
     
 def move(my_history, their_history, my_score, their_score):
     
         if len(my_history)==0: # It's the first round; betray.
             return 'b'
-        if my_history[-1]=='c' and their_history[-1]=='b':
+        if my_history[-1]=='b' and their_history[-1]=='b':
             return 'b' # Betray if severely punished last time,
-        elif my_score > -200 and their_score < 0 :
+        elif my_score > -200 and their_score < -100 :
             return 'b'
+        
+        elif my_score >-250 and their_score <-300 :
+            return 'b'
+        elif my_score > 0 and their_score < 0 :
+            return 'b'
+        elif my_score < -210 and their_score >-200 :
+            return 'c'
+    
+        elif my_score <-320 and their_score >340 :
+            return 'b' 
         else:
             return 'c' # otherwise collude
-
-   
-  
+            
     # my_history: a string with one letter (c or b) per round that has been played with this opponent.
     # their_history: a string of the same length as history, possibly empty. 
     # The first round between these two players is my_history[0] and their_history[0].
